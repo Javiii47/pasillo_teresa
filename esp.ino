@@ -260,24 +260,24 @@ void setup(){
 
   server.on("/fase1", HTTP_GET, [](AsyncWebServerRequest *request){       //funcion al pulsar el boton fase1
     request->send_P(200, "text/plain", "Hola");
-    
+    Serial.println("Fase 1 recibida");
   });
   
   server.on("/fase2", HTTP_GET, [](AsyncWebServerRequest *request){       //funcion al pulsar el boton fase2
     request->send_P(200, "text/plain", "Hola");
-    
+    Serial.println("Fase 2 recibida");
   });
 
 
 
   server.on("/fase3", HTTP_GET, [](AsyncWebServerRequest *request){       //funcion al pulsar el boton fase3
     request->send_P(200, "text/plain", "Hola");
-
+    Serial.println("Fase 3 recibida");
   });
 
   server.on("/results", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", "Hola");
-    
+    Serial.println("Resultados requeridos");
   });
 
 

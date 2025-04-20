@@ -30,7 +30,7 @@ html {
 
 .botones {
     font-size: 5vmin;
-    background-color: rgb(240, 225, 192);
+    background-color: #f0e1c0;
     color: #54494B;
     border: 0.5vw solid #F0EBD8;
     border-radius: 4vw;
@@ -40,7 +40,7 @@ html {
 
 #boton-secundario {
     font-size: 3.5vmin;
-    background-color: rgb(240, 225, 192);
+    background-color: #f0e1c0;
     color: #54494B;
     border: 0.3vw solid #F0EBD8;
     border-radius: 3vw;

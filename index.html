@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+  <html lang = "es">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  
+  <body>
+
+    <h1>Pasillo Rehabilitador</h1>
+    <h4>Elija la fase deseada:</h4>
+
+    <div id="botonera">
+        <button class="botones" id="fase1_b">Fase 1</button>
+        <button class="botones" id="fase2_b">Fase 2</button>
+        <button class="botones" id="fase3_b">Fase 3</button>
+    </div>
+
+    <h4>Parámetros medidos:</h4>
+    <div id="results_div">
+        <div class="result_row">
+            <label class="etiquetas">Longitud de paso:</label>
+            <label class="resultados" id="long_paso_res">--</label>
+            <label class="unidades"> cm</label>
+        </div>
+        <div class="result_row">
+            <label class="etiquetas">Longitud de zancada:</label>
+            <label class="resultados" id="long_zan_res">--</label>
+            <label class="unidades"> cm</label>
+        </div>
+        <div class="result_row">
+            <label class="etiquetas">Tiempo de apoyo:</label>
+            <label class="resultados" id="tiempo_res">--</label>
+            <label class="unidades"> s</label>
+        </div>
+        <div class="result_row">
+            <label class="etiquetas">Velocidad de la marcha:</label>
+            <label class="resultados" id="vel_res">--</label>
+            <label class="unidades"> cm/s</label>
+        </div>
+    </div>
+
+    <button id="boton-secundario">Actualizar parámetros obtenidos</button>
+    <script src="script.js"></script>
+</body>
+</html>

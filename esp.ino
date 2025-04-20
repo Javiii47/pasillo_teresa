@@ -17,10 +17,6 @@ const int pin2_1 = 6;
 const int pin2_2 = 7;
 const int pin2_3 = 8;
 
-const int pin3_0 = 9;
-const int pin3_1 = 10;
-const int pin3_2 = 11;
-const int pin3_3 = 12;
 */
 
 ezButton pie1_0(pin1_0);
@@ -33,13 +29,9 @@ ezButton pie2_1(pin2_1);
 ezButton pie2_2(pin2_2);  
 ezButton pie2_3(pin2_3); 
 
-ezButton pie3_0(pin3_0);
-ezButton pie3_1(pin3_1);  
-ezButton pie3_2(pin3_2);  
-ezButton pie3_3(pin3_3); 
 */
 
-const char* ssid     = "Brazo";       //nombre de la red WiFi, si la creas tú o si te conectas a una existente
+const char* ssid     = "Pasillo";       //nombre de la red WiFi, si la creas tú o si te conectas a una existente
 const char* password = "123456789";   //Contraseña de la que crees tú o de la que te conectes
 
 
@@ -58,73 +50,123 @@ const char index_html[] PROGMEM = R"rawliteral(
             height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;  
-            background: linear-gradient(to bottom, #a0d4e0, #265c68)
+            align-items: center;
+            background: linear-gradient(to bottom, #f3e1e3, #B98389);
+            color: #54494B;
         }
+
         html {
-         font-family: Arial;
-         display: flex;
-         flex-direction: column;
-         align-items: center;  
-         margin: 0px auto;
-         text-align: center;
-         height: 100%;
-         width: 100%;
+            font-family: Arial;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0px auto;
+            text-align: center;
+            height: 100%;
+            width: 100%;
         }
+
         #botonera {
-            height: 30%;
+            height: auto;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
             width: 75%;
-            height: 100%;
+            gap: 1vh;
         }
-        .spacer {
-            height: 40%;
+
+        .botones {
+            font-size: 5vmin;
+            background-color: rgb(240, 225, 192);
+            color: #54494B;
+            border: 0.5vw solid #F0EBD8;
+            border-radius: 4vw;
+            height: 8vh;
+            min-width: 1vW;
         }
+
+        #boton-secundario {
+            font-size: 3.5vmin;
+            background-color: rgb(240, 225, 192);
+            color: #54494B;
+            border: 0.3vw solid #F0EBD8;
+            border-radius: 3vw;
+            padding: 1vh 2vw;
+            margin-top: 4vh;
+            margin-bottom: 4vh;
+        }
+
+        h4 {
+            border-bottom: 1vw solid #584d3f;
+            align-self: flex-start;
+            margin-left: 10%;
+            margin-top: 4vh;
+            text-align: left;
+        }
+
         #results_div {
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
-            height: 80%;
+            justify-content: flex-start;
+            align-self: flex-start;
+            margin-left: 10%;
+            width: 80%;
+            gap: 1vh;
+            text-align: left;
         }
-        .botones {
-            font-size: 7vmin;
-            background-color: rgb(240, 225, 192);
-            color: #000000;
-            border: 0.5vw solid #AD9980;
-            border-radius: 4vw;
-            height: 20%;
-            min-width: 1vW; 
+
+        .result_row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
-        h4 {
-            border-bottom: 1vw solid #AD9980;
+
+        .etiquetas {
+            font-weight: bold;
         }
     </style>
   </head>
   
   <body>
-    <h1>Pasillo Rehabilitador</h1>
-        <div id="botonera">
-            <button class="botones" id="fase1">Fase 1</button>
-            <button class="botones" id="fase2">Fase 2</button>
-            <button class="botones" id="fase3">Fase 3</button>
-        </div>
-        <div class="spacer"></div>
-        <h4>Parámetros medidos</h4>
-        <div id="results_div">
 
-            <label class="etiquetas">Longitud de paso: </label>
-            <label class="resultados">-- m</label>
-            <label class="etiquetas">Longitud de zancada: </label>
-            <label class="resultados">-- m</label>
+    <h1>Pasillo Rehabilitador</h1>
+    <h4>Elija la fase deseada:</h4>
+
+    <div id="botonera">
+        <button class="botones" id="fase1_b">Fase 1</button>
+        <button class="botones" id="fase2_b">Fase 2</button>
+        <button class="botones" id="fase3_b">Fase 3</button>
+    </div>
+
+    <h4>Parámetros medidos:</h4>
+    <div id="results_div">
+        <div class="result_row">
+            <label class="etiquetas">Longitud de paso:</label>
+            <label class="resultados" id="long_paso_res">-- cm</label>
         </div>
-  </body>
+        <div class="result_row">
+            <label class="etiquetas">Longitud de zancada:</label>
+            <label class="resultados" id="long_zan_res">-- cm</label>
+        </div>
+        <div class="result_row">
+            <label class="etiquetas">Tiempo de apoyo:</label>
+            <label class="resultados" id="tiempo_res">-- s</label>
+        </div>
+        <div class="result_row">
+            <label class="etiquetas">Velocidad de la marcha:</label>
+            <label class="resultados" id="vel_res">-- cm/s</label>
+        </div>
+    </div>
+
+    <button id="boton-secundario">Actualizar parámetros obtenidos</button>
+
+</body>
 <script>
 
-document.getElementById("fase1").addEventListener("click", function () {
+    document.getElementById("fase1_b").addEventListener("click", function () {
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "/down", true);
+            xhttp.open("GET", "/fase1", true);
             xhttp.onreadystatechange = function () {
                 if (xhttp.readyState == XMLHttpRequest.DONE) {
                     if (xhttp.status != 200) {
@@ -133,13 +175,13 @@ document.getElementById("fase1").addEventListener("click", function () {
                     }
                 }
             };
-            //xhttp.send();
+            xhttp.send();
         });
 
- document.getElementById("fase2").addEventListener("click", function () {
+    document.getElementById("fase2_b").addEventListener("click", function () {
             // Post request to dispense endpoint
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "/up", true);
+            xhttp.open("GET", "/fase2", true);
             xhttp.onreadystatechange = function () {
                 if (xhttp.readyState == XMLHttpRequest.DONE) {
                     if (xhttp.status != 200) {
@@ -147,12 +189,13 @@ document.getElementById("fase1").addEventListener("click", function () {
                     }
                 }
             };
+            xhttp.send();
         });
         
-  document.getElementById("fase3").addEventListener("click", function () {
+    document.getElementById("fase3_b").addEventListener("click", function () {
             // Post request to dispense endpoint
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "/stop", true);
+            xhttp.open("GET", "/fase3", true);
             xhttp.onreadystatechange = function () {
                 if (xhttp.readyState == XMLHttpRequest.DONE) {
                     if (xhttp.status != 200) {
@@ -160,22 +203,23 @@ document.getElementById("fase1").addEventListener("click", function () {
                     }
                 }
             };
-            xhttp.send("amount=1"); // Enviar el número 1 como dato
+            xhttp.send(); 
+        });
+
+    document.getElementById("boton-secundario").addEventListener("click", function () {
+            // Post request to dispense endpoint
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "/results", true);
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE) {
+                    if (xhttp.status != 200) {
+                        console.error("Error");
+                    }
+                }
+            };
+            xhttp.send();
         });
         
-  document.getElementById("scriptButton").addEventListener("click", function () {
-            // Post request to dispense endpoint
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "/script", true);
-            xhttp.onreadystatechange = function () {
-                if (xhttp.readyState == XMLHttpRequest.DONE) {
-                    if (xhttp.status != 200) {
-                        console.error("Error");
-                    }
-                }
-            };
-            xhttp.send("amount=1"); // Enviar el número 1 como dato
-        });
 </script>
 </html>)rawliteral";
 
@@ -220,7 +264,7 @@ void setup(){
   });
   
   server.on("/fase2", HTTP_GET, [](AsyncWebServerRequest *request){       //funcion al pulsar el boton fase2
-    //request->send_P(200, "text/plain", "Hola");
+    request->send_P(200, "text/plain", "Hola");
     
   });
 
@@ -231,7 +275,7 @@ void setup(){
 
   });
 
-  server.on("/middle", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/results", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", "Hola");
     
   });

@@ -1,0 +1,80 @@
+body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to bottom, #f3e1e3, #B98389);
+    color: #54494B;
+}
+
+html {
+    font-family: Arial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px auto;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+#botonera {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 75%;
+    gap: 1vh;
+}
+
+.botones {
+    font-size: 5vmin;
+    background-color: rgb(240, 225, 192);
+    color: #54494B;
+    border: 0.5vw solid #F0EBD8;
+    border-radius: 4vw;
+    height: 8vh;
+    min-width: 1vW;
+}
+
+#boton-secundario {
+    font-size: 3.5vmin;
+    background-color: rgb(240, 225, 192);
+    color: #54494B;
+    border: 0.3vw solid #F0EBD8;
+    border-radius: 3vw;
+    padding: 1vh 2vw;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+}
+
+h4 {
+    border-bottom: 1vw solid #584d3f;
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-top: 4vh;
+    text-align: left;
+}
+
+#results_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: flex-start;
+    margin-left: 10%;
+    width: 80%;
+    gap: 1vh;
+    text-align: left;
+}
+
+.result_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.etiquetas {
+    font-weight: bold;
+}

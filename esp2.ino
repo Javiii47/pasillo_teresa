@@ -8,10 +8,10 @@
 
 
 //declaraciones de los pines que serán usados para las huellas
-const int pin1_0 = 36;
-const int pin1_1 = 39;
-const int pin1_2 = 34;
-const int pin1_3 = 35;
+const int pin1_0 = 4;
+const int pin1_1 = 5;
+const int pin1_2 = 6;
+const int pin1_3 = 7;
 /*
 const int pin2_0 = 5;
 const int pin2_1 = 6;

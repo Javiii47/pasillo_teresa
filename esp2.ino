@@ -3,34 +3,10 @@
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include <ezButton.h>
 #include <LittleFS.h>
 
 
 //declaraciones de los pines que serán usados para las huellas
-const int pin1_0 = 4;
-const int pin1_1 = 5;
-const int pin1_2 = 6;
-const int pin1_3 = 7;
-/*
-const int pin2_0 = 5;
-const int pin2_1 = 6;
-const int pin2_2 = 7;
-const int pin2_3 = 8;
-
-*/
-
-ezButton pie1_0(pin1_0);
-ezButton pie1_1(pin1_1);  
-ezButton pie1_2(pin1_2);  
-ezButton pie1_3(pin1_3); 
-/*
-ezButton pie2_0(pin2_0);
-ezButton pie2_1(pin2_1);  
-ezButton pie2_2(pin2_2);  
-ezButton pie2_3(pin2_3); 
-
-*/
 
 const char* ssid     = "Pasillo";       //nombre de la red WiFi, si la creas tú o si te conectas a una existente
 const char* password = "123456789";   //Contraseña de la que crees tú o de la que te conectes

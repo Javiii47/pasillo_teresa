@@ -7,7 +7,7 @@ int vector2[4];
 
 
 void setup(){
-    Serial.begin(115200);
+    Serial.begin(9600);
     for (i=0; i<4 ; i++) {
         pinMode(vector[i], INPUT_PULLUP);
     }
@@ -16,17 +16,19 @@ void setup(){
 
 void loop(){
 
+    
     for (i = 0; i<4; i++){
         vector2[i] = digitalRead(vector[i]);
     }
 
-    Serial.println("Vector: ");
+    //Serial.print("Vector: ");
     for (i = 0; i<4; i++){
         Serial.print(vector2[i]);
         Serial.print(", ");
     }
+    Serial.print("\n");
     
-    delay(300);
+    
 
 }
 

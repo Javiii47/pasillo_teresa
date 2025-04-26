@@ -4,6 +4,12 @@
 #include <ESPAsyncWebServer.h>
 #include <LittleFS.h>
 #include <Adafruit_NeoPixel.h>
+#include <HardwareSerial.h>
+
+#define TXD1 19
+#define RXD1 21
+
+HardwareSerial Arduino_Serial(1);
 
 
 // Pines de LEDS
@@ -35,7 +41,9 @@ void setup(){
   IPAddress IP = WiFi.softAPIP();              
   Serial.print("AP IP address: ");             
   Serial.println(IP);                          
-  Serial.println(WiFi.localIP());              
+  Serial.println(WiFi.localIP());    
+
+  Arduino_Serial.begin(9600, SERIAL_8N1, RXD1, TXD1);          
 
   initLittleFS();
 
@@ -91,4 +99,9 @@ void setup(){
 
 void loop(){  
   // Aquí podrías leer botones físicos, si quieres
+  if (Arduino_Serial.available()) {
+    // Read data and display it
+    String message = Arduino_Serial.readStringUntil('\n');
+    Serial.println("Received: " + message);
+  }
 }

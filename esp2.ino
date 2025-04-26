@@ -16,6 +16,8 @@ HardwareSerial Arduino_Serial(1);
 const int PIN = 13;          // Pin donde está conectada la tira de leds
 const int NUMPIXELS = 5;    // Número de leds conectados
 
+boolean listening;
+
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 // Datos de red
@@ -71,6 +73,13 @@ void setup(){
     }
 
     pixels.show(); // Enviar cambios al hardware
+
+    
+    listening = true;
+    Arduino_Serial.print("1");
+    Serial.println("Listening");
+    
+
   });
   
   server.on("/fase2", HTTP_GET, [](AsyncWebServerRequest *request){    
@@ -92,6 +101,14 @@ void setup(){
       pixels.setPixelColor(i, 0, 0, 0); // Apagar cada LED
     }
     pixels.show(); // Enviar cambios
+
+    while(listening){
+      if (Arduino_Serial.available()) {
+        listening = false;
+        Arduino_Serial.print("0");
+      }
+    }
+    
   });
 
   server.begin(); // Iniciar servidor
@@ -99,9 +116,11 @@ void setup(){
 
 void loop(){  
   // Aquí podrías leer botones físicos, si quieres
-  if (Arduino_Serial.available()) {
-    // Read data and display it
-    String message = Arduino_Serial.readStringUntil('\n');
-    Serial.println("Received: " + message);
+  if (listening){
+    if (Arduino_Serial.available()) {
+      // Read data and display it
+      String message = Arduino_Serial.readStringUntil('\n');
+      Serial.println("Received: " + message);
+    }
   }
 }

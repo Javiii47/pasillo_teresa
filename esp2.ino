@@ -205,7 +205,9 @@ void loop(){
     }
   }
   else {
-    if (modo != 0){
+    Serial.print("else");
+    if (mode != 0){
+      Serial.print("mode != 0");
       resultados = read_string(message, mode);
       mode = 0;
 

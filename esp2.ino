@@ -17,7 +17,7 @@ const int PIN = 13;          // Pin donde está conectada la tira de leds
 const int NUMPIXELS = 5;    // Número de leds conectados
 
 boolean listening;
-boolean check_results = false;
+boolean prepare_results = false;
 int mode;
 
 struct analisis {
@@ -77,7 +77,7 @@ struct analisis read_string(String vector, int config){
       break;
     case (1):
       Serial.println("caso 1");
-      for (i= 0; i<vector.length(), stay==true; i++){
+      for (i= 0; i<vector.length() && stay==true; i++){
         if (vector[i] == '0'){
           if (entre){
             stay = false;
@@ -188,7 +188,11 @@ void setup(){
     pixels.show(); // Enviar cambios
 
     end_communication();
-    check_results = true;
+
+    Serial.print("Longitud de paso: ");             //debugging
+    Serial.println(resultados.long_p);
+    Serial.print("Longitud de zancada: ");
+    Serial.println(resultados.long_z);
     
     
   });
@@ -203,19 +207,12 @@ void loop(){
       // Read data and display it
       message = Arduino_Serial.readStringUntil('\n');
       Serial.println("Received: " + message);
+      prepare_results = true;
     }
   }
-  else {
-    if (check_results){
-      Serial.print("check results");
+  
+  if (prepare_results){
       resultados = read_string(message, mode);
-      mode = 0;
-      check_results = false;
-
-      Serial.print("Longitud de paso: ");             //debugging
-      Serial.println(resultados.long_p);
-      Serial.print("Longitud de zancada: ");
-      Serial.println(resultados.long_z);
-    }
+      prepare_results = false;
   }
 }

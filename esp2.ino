@@ -17,6 +17,7 @@ const int PIN = 13;          // Pin donde está conectada la tira de leds
 const int NUMPIXELS = 5;    // Número de leds conectados
 
 boolean listening;
+boolean check_results = false;
 int mode;
 
 struct analisis {
@@ -187,7 +188,7 @@ void setup(){
     pixels.show(); // Enviar cambios
 
     end_communication();
-
+    check_results = true;
     
     
   });
@@ -205,11 +206,11 @@ void loop(){
     }
   }
   else {
-    Serial.print("else");
-    if (mode != 0){
-      Serial.print("mode != 0");
+    if (check_results){
+      Serial.print("check results");
       resultados = read_string(message, mode);
       mode = 0;
+      check_results = false;
 
       Serial.print("Longitud de paso: ");             //debugging
       Serial.println(resultados.long_p);

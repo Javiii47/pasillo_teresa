@@ -1,14 +1,14 @@
 #include <Arduino.h>
 
-#define array_size 4
+#define array_size 10
 
-int vector_pines[array_size] = {3,4,5,6};          //vector con los pines en orden de botones
+int vector_pines[array_size] = {2,3,4,5,6,7,8, 9, 10};          //vector con los pines en orden de botones
 int i;
-int vector[array_size] = {0, 0, 0, 0};                     //vector a la salida con el tamaño igual al otro
+int vector[array_size] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};                     //vector a la salida con el tamaño igual al otro
 boolean change=0;
 
 
-long previous_time = 0;
+unsigned long previous_time = 0;
 const int interval_time = 300;
 boolean busy = false;
 
@@ -27,8 +27,8 @@ void loop(){
         previous_time = millis();
         if (busy){
             for (i = 0; i<array_size; i++){
-                if (vector[i] != digitalRead(vector_pines[i])){
-                    vector[i] = digitalRead(vector_pines[i]);
+                if (vector[i] == 1 && digitalRead(vector_pines[i]) == 0){
+                    vector[i] = 0;
                     change = true;
                 }
             }

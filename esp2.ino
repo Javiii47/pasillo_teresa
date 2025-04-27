@@ -46,20 +46,15 @@ void initLittleFS() {
 }
 
 void end_communication(){
-  while(listening){
-      if (Arduino_Serial.available()) {
-        listening = false;
-        Arduino_Serial.print("0");
-      }
+    listening = false;
+    Arduino_Serial.print("0");
     }
-}
+
 
 void start_communication(){
-  while (listening == false){
     listening = true;
     Arduino_Serial.print("1");
     Serial.println("Listening");
-  }
 }
 
 struct analisis read_string(String vector, int config){
@@ -191,19 +186,10 @@ void setup(){
     }
     pixels.show(); // Enviar cambios
 
-    Serial.println("terminamos conexion");
     end_communication();
-    Serial.println("conexion terminada");
-    /*
-    Serial.println("entramos a la funcion");
-    resultados = read_string(message, mode);
-    mode = 0;
 
-    Serial.print("Longitud de paso: ");             //debugging
-    Serial.println(resultados.long_p);
-    Serial.print("Longitud de zancada: ");
-    Serial.println(resultados.long_z);
-    */
+    
+    
   });
 
   server.begin(); // Iniciar servidor
@@ -216,6 +202,17 @@ void loop(){
       // Read data and display it
       message = Arduino_Serial.readStringUntil('\n');
       Serial.println("Received: " + message);
+    }
+  }
+  else {
+    if (modo != 0){
+      resultados = read_string(message, mode);
+      mode = 0;
+
+      Serial.print("Longitud de paso: ");             //debugging
+      Serial.println(resultados.long_p);
+      Serial.print("Longitud de zancada: ");
+      Serial.println(resultados.long_z);
     }
   }
 }

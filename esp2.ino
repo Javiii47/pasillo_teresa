@@ -79,26 +79,37 @@ struct analisis read_string(String vector, int config){
       break;
     case (1):
       for (i= 0; i<vector.length(), stay==true; i++){
-      if (vector[i] == '0'){
-        pie = true;
-        suma1 += 2;
-      }
-      if (pie==true && vector[i] == '1'){
-        entre = true;
-        pie = false;
-        suma1 += 2;
-      }
-      if (vector[i] == '0' && entre==true){
-        stay = false;
-      }
+        if (vector[i] == '0'){
+          if (entre){
+            stay = false;
+          }
+          else {
+            pie = true;
+            suma1 += 2;
+          }
+        }
+        else if (vector[i] == '1'){
+          if (pie){
+            entre = true;
+            pie = false;
+            suma1 += 2;
+          }
+          else if (entre) {
+            suma1 += 2;
+          }
+        }
       }
       inside_s.long_p = suma1;
       inside_s.long_z = 0;
       break;
 
     case (2):
+      inside_s.long_p = 50;
+      inside_s.long_z = 10;
       break;
     case (3):
+      inside_s.long_p = 25;
+      inside_s.long_z = 35;
       break;
   }
 

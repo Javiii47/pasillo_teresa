@@ -77,7 +77,7 @@ struct analisis read_string(String vector, int config){
       break;
     case (1):
       Serial.println("caso 1");
-      for (i= 0; i<vector.length(), stay==true; i++){
+      for (i= 0; i<4 && stay==true; i++){
         if (vector[i] == '0'){
           if (entre){
             stay = false;

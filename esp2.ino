@@ -17,6 +17,16 @@ const int PIN = 13;          // Pin donde está conectada la tira de leds
 const int NUMPIXELS = 5;    // Número de leds conectados
 
 boolean listening;
+int mode;
+
+struct analisis {
+  int long_z;
+  int long_p;
+};
+
+struct analisis resultados;
+
+String message;
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -33,6 +43,67 @@ void initLittleFS() {
     Serial.println("An error has occurred while mounting LittleFS");
   }
   Serial.println("LittleFS mounted successfully");
+}
+
+void end_communication(){
+  while(listening){
+      if (Arduino_Serial.available()) {
+        listening = false;
+        Arduino_Serial.print("0");
+      }
+    }
+}
+
+void start_communication(){
+  while (listening == false){
+    listening = true;
+    Arduino_Serial.print("1");
+    Serial.println("Listening");
+  }
+}
+
+struct analisis read_string(String vector, int config){
+  int i=0;
+  struct analisis inside_s;
+  boolean pie = false;
+  boolean entre = false;
+  boolean stay = true;
+  int suma1 = 0;
+  int suma2 = 0;
+
+
+  switch(config){
+    case (0):
+      inside_s.long_p = 0;
+      inside_s.long_z = 0;
+      break;
+    case (1):
+      for (i= 0; i<vector.length(), stay==true; i++){
+      if (vector[i] == '0'){
+        pie = true;
+        suma1 += 2;
+      }
+      if (pie==true && vector[i] == '1'){
+        entre = true;
+        pie = false;
+        suma1 += 2;
+      }
+      if (vector[i] == '0' && entre==true){
+        stay = false;
+      }
+      }
+      inside_s.long_p = suma1;
+      inside_s.long_z = 0;
+      break;
+
+    case (2):
+      break;
+    case (3):
+      break;
+  }
+
+  
+  return inside_s; 
 }
 
 void setup(){
@@ -74,22 +145,24 @@ void setup(){
 
     pixels.show(); // Enviar cambios al hardware
 
-    
-    listening = true;
-    Arduino_Serial.print("1");
-    Serial.println("Listening");
-    
-
+    mode = 1;
+    start_communication(); 
   });
   
   server.on("/fase2", HTTP_GET, [](AsyncWebServerRequest *request){    
     request->send_P(200, "text/plain", "Hola");
     Serial.println("Fase 2 recibida");
+
+    mode = 2;
+    start_communication();
   });
 
   server.on("/fase3", HTTP_GET, [](AsyncWebServerRequest *request){       
     request->send_P(200, "text/plain", "Hola");
     Serial.println("Fase 3 recibida");
+
+    mode = 3;
+    start_communication();
   });
 
   server.on("/results", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -102,12 +175,14 @@ void setup(){
     }
     pixels.show(); // Enviar cambios
 
-    while(listening){
-      if (Arduino_Serial.available()) {
-        listening = false;
-        Arduino_Serial.print("0");
-      }
-    }
+    end_communication();
+    resultados = read_string(message, mode);
+    mode = 0;
+
+    Serial.print("Longitud de paso: ");             //debugging
+    Serial.println(resultados.long_p);
+    Serial.print("Longitud de zancada: ");
+    Serial.println(resultados.long_z);
     
   });
 
@@ -119,7 +194,7 @@ void loop(){
   if (listening){
     if (Arduino_Serial.available()) {
       // Read data and display it
-      String message = Arduino_Serial.readStringUntil('\n');
+      message = Arduino_Serial.readStringUntil('\n');
       Serial.println("Received: " + message);
     }
   }

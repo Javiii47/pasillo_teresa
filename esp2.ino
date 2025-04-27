@@ -191,7 +191,10 @@ void setup(){
     }
     pixels.show(); // Enviar cambios
 
+    Serial.println("terminamos conexion");
     end_communication();
+    Serial.println("conexion terminada");
+    /*
     Serial.println("entramos a la funcion");
     resultados = read_string(message, mode);
     mode = 0;
@@ -200,7 +203,7 @@ void setup(){
     Serial.println(resultados.long_p);
     Serial.print("Longitud de zancada: ");
     Serial.println(resultados.long_z);
-    
+    */
   });
 
   server.begin(); // Iniciar servidor

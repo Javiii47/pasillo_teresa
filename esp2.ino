@@ -70,14 +70,17 @@ struct analisis read_string(String vector, int config){
   boolean stay = true;
   int suma1 = 0;
   int suma2 = 0;
+  Serial.println("entraste a la funcion");
 
 
   switch(config){
     case (0):
+      Serial.println("caso 0");
       inside_s.long_p = 0;
       inside_s.long_z = 0;
       break;
     case (1):
+      Serial.println("caso 1");
       for (i= 0; i<vector.length(), stay==true; i++){
         if (vector[i] == '0'){
           if (entre){
@@ -104,16 +107,18 @@ struct analisis read_string(String vector, int config){
       break;
 
     case (2):
+      Serial.println("caso 2");
       inside_s.long_p = 50;
       inside_s.long_z = 10;
       break;
     case (3):
+      Serial.println("caso 3");
       inside_s.long_p = 25;
       inside_s.long_z = 35;
       break;
   }
 
-  
+  Serial.println("devolviendo");
   return inside_s; 
 }
 
@@ -187,6 +192,7 @@ void setup(){
     pixels.show(); // Enviar cambios
 
     end_communication();
+    Serial.println("entramos a la funcion");
     resultados = read_string(message, mode);
     mode = 0;
 

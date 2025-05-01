@@ -64,6 +64,7 @@ struct analisis read_string(String vector, int config){
   boolean pie = false;
   boolean entre = false;
   boolean stay = true;
+  boolean first = true;
   int suma1 = 0;
   int suma2 = 0;
   Serial.println("entraste a la funcion");
@@ -75,9 +76,19 @@ struct analisis read_string(String vector, int config){
       inside_s.long_p = 0;
       inside_s.long_z = 0;
       break;
+
     case (1):
       Serial.println("caso 1");
-      
+      for (i= 0; i<vector.length() && first==true; i++){
+        if (vector [i] == '1'){
+          suma1 += 2;
+        }
+        else{
+          first== false;
+        }
+      } 
+      inside_s.long_p = suma1;
+      inside_s.long_z = 0;
       break;
 
     case (2):
@@ -89,23 +100,24 @@ struct analisis read_string(String vector, int config){
           }
           else {
             pie = true;
-            suma1 += 2;
+            suma2 += 2;
           }
         }
         else if (vector[i] == '1'){
           if (pie){
             entre = true;
             pie = false;
-            suma1 += 2;
+            suma2 += 2;
           }
           else if (entre) {
-            suma1 += 2;
+            suma2 += 2;
           }
         }
       }
-      inside_s.long_p = suma1;
+      inside_s.long_p = suma2;
       inside_s.long_z = 0;
       break;
+
     case (3):
       Serial.println("caso 3");
       inside_s.long_p = 25;

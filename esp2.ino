@@ -8,6 +8,7 @@
 
 #define TXD1 19
 #define RXD1 21
+#define offset_huella 0       //hay que calcular fisicamente el offset entre el talon de la huella y la primera linea de medida
 
 HardwareSerial Arduino_Serial(1);
 
@@ -66,7 +67,8 @@ struct analisis read_string(String vector, int config){
   boolean stay = true;
   boolean first = true;
   int suma1 = 0;
-  int suma2 = 0;
+  int suma2_1 = 0;
+  int suma2_2 = 0;
   Serial.println("entraste a la funcion");
 
 
@@ -87,12 +89,12 @@ struct analisis read_string(String vector, int config){
           first = false;
         }
       } 
-      inside_s.long_p = suma1;
+      inside_s.long_p = suma1 + offset_huella;
       inside_s.long_z = 0;
       break;
 
     case (2):
-      Serial.println("caso 1");
+      Serial.println("caso 2");
       for (i= 0; i<vector.length() && stay==true; i++){
         if (vector[i] == '0'){
           if (entre){
@@ -100,22 +102,23 @@ struct analisis read_string(String vector, int config){
           }
           else {
             pie = true;
-            suma2 += 2;
+            suma2_1 += 2;
           }
         }
         else if (vector[i] == '1'){
           if (pie){
             entre = true;
             pie = false;
-            suma2 += 2;
+            suma2_1 += 2;
           }
           else if (entre) {
-            suma2 += 2;
+            suma2_1 += 2;
           }
         }
+        suma2_2 += 2;
       }
-      inside_s.long_p = suma2;
-      inside_s.long_z = 0;
+      inside_s.long_p = suma2_1;      
+      inside_s.long_z = suma2_2 + offset_huella;
       break;
 
     case (3):

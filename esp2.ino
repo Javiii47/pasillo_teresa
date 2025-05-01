@@ -189,7 +189,7 @@ void setup(){
   });
 
   server.on("/results", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", message_e);
+    request->send(200, "text/plain", message_e);
     Serial.println("Resultados requeridos");
 
     // Apagar todos los LEDs

@@ -60,15 +60,17 @@ document.getElementById("boton-secundario").addEventListener("click", function (
     xhttp.open("GET", "/results", true);
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == XMLHttpRequest.DONE) {
-            if (xhttp.status != 200) {
-                console.error("Error");
+            if (xhttp.status == 200) {
+                console.log(xhttp.responseText);
+                var response = xhttp.responseText;
+                var response_array = response.split(',');
             }
         }
     };
     xhttp.send();
 
-    document.getElementById("long_paso_res").innerHTML = "28";          //actualizacion de parametros
-    document.getElementById("long_zan_res").innerHTML = "75";           
+    document.getElementById("long_paso_res").innerHTML = response_array[0];          //actualizacion de parametros
+    document.getElementById("long_zan_res").innerHTML = response_array[1];           
     document.getElementById("tiempo_res").innerHTML = "4";
     document.getElementById("vel_res").innerHTML = "5";
 

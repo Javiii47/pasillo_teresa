@@ -84,7 +84,7 @@ struct analisis read_string(String vector, int config){
           suma1 += 2;
         }
         else{
-          first== false;
+          first = false;
         }
       } 
       inside_s.long_p = suma1;

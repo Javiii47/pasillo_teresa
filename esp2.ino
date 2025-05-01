@@ -27,7 +27,7 @@ struct analisis {
 
 struct analisis resultados;
 
-String message;
+String message, message_e;
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -77,6 +77,11 @@ struct analisis read_string(String vector, int config){
       break;
     case (1):
       Serial.println("caso 1");
+      
+      break;
+
+    case (2):
+      Serial.println("caso 1");
       for (i= 0; i<vector.length() && stay==true; i++){
         if (vector[i] == '0'){
           if (entre){
@@ -100,12 +105,6 @@ struct analisis read_string(String vector, int config){
       }
       inside_s.long_p = suma1;
       inside_s.long_z = 0;
-      break;
-
-    case (2):
-      Serial.println("caso 2");
-      inside_s.long_p = 50;
-      inside_s.long_z = 10;
       break;
     case (3):
       Serial.println("caso 3");
@@ -178,7 +177,7 @@ void setup(){
   });
 
   server.on("/results", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", "Hola");
+    request->send_P(200, "text/plain", message_e);
     Serial.println("Resultados requeridos");
 
     // Apagar todos los LEDs
@@ -212,7 +211,12 @@ void loop(){
   }
 
   if (prepare_results){
+      Serial.println("preparando datos");
       resultados = read_string(message, mode);
       prepare_results = false;
+      message_e = "";
+      message_e += resultados.long_p;
+      message_e += ",";
+      message_e += resultados.long_z;
   }
 }

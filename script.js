@@ -64,15 +64,14 @@ document.getElementById("boton-secundario").addEventListener("click", function (
                 console.log(xhttp.responseText);
                 var response = xhttp.responseText;
                 var response_array = response.split(',');
+                document.getElementById("long_paso_res").innerHTML = response_array[0];          //actualizacion de parametros
+                document.getElementById("long_zan_res").innerHTML = response_array[1];           
+                document.getElementById("tiempo_res").innerHTML = "4";
+                document.getElementById("vel_res").innerHTML = "5";
             }
         }
     };
     xhttp.send();
-
-    document.getElementById("long_paso_res").innerHTML = response_array[0];          //actualizacion de parametros
-    document.getElementById("long_zan_res").innerHTML = response_array[1];           
-    document.getElementById("tiempo_res").innerHTML = "4";
-    document.getElementById("vel_res").innerHTML = "5";
 
     document.getElementById("fase1_b").style.backgroundColor = "#f0e1c0";
     document.getElementById("fase2_b").style.backgroundColor = "#f0e1c0";

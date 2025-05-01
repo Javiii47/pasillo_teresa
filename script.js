@@ -71,8 +71,7 @@ document.getElementById("boton-secundario").addEventListener("click", function (
 
     document.getElementById("long_paso_res").innerHTML = response_array[0];          //actualizacion de parametros
     document.getElementById("long_zan_res").innerHTML = response_array[1];           
-    document.getElementById("tiempo_res").innerHTML = "4";
-    document.getElementById("vel_res").innerHTML = "5";
+    document.getElementById("long_paso_res2").innerHTML = response_array[2];
 
     document.getElementById("fase1_b").style.backgroundColor = "#f0e1c0";
     document.getElementById("fase2_b").style.backgroundColor = "#f0e1c0";

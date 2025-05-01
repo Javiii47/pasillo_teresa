@@ -13,6 +13,11 @@ const int interval_time = 300;
 boolean busy = false;
 
 
+void default_vector(){
+    for (i=0; i<array_size; i++){
+        vector[i] = 1;
+    }
+}
 
 void setup(){
     Serial.begin(9600);
@@ -51,6 +56,7 @@ void loop(){
             }
             else if (message == "0"){
                 busy = false;
+                default_vector();
             }  
         }
     }

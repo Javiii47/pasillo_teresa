@@ -23,7 +23,8 @@ int mode;
 
 struct analisis {
   int long_z;
-  int long_p;
+  int long_p1;
+  int long_p2;
 };
 
 struct analisis resultados;
@@ -75,7 +76,8 @@ struct analisis read_string(String vector, int config){
   switch(config){
     case (0):
       Serial.println("caso 0");
-      inside_s.long_p = 0;
+      inside_s.long_p1 = 0;
+      inside_s.long_p2 = 0;
       inside_s.long_z = 0;
       break;
 
@@ -89,11 +91,12 @@ struct analisis read_string(String vector, int config){
           first = false;
         }
       } 
-      inside_s.long_p = suma1 + offset_huella;
+      inside_s.long_p1 = suma1 + offset_huella;
+      inside_s.long_p2 = 0;
       inside_s.long_z = 0;
       break;
 
-    case (2):
+    default:
       Serial.println("caso 2");
       for (i= 0; i<vector.length() && stay==true; i++){
         if (vector[i] == '0'){
@@ -114,17 +117,15 @@ struct analisis read_string(String vector, int config){
           else if (entre) {
             suma2_1 += 2;
           }
+          else {
+            suma1 += 2;
+          }
         }
         suma2_2 += 2;
       }
-      inside_s.long_p = suma2_1;      
+      inside_s.long_p1 = suma2_1;      
+      inside_s.long_p1 = suma1 + offset_huella;
       inside_s.long_z = suma2_2 + offset_huella;
-      break;
-
-    case (3):
-      Serial.println("caso 3");
-      inside_s.long_p = 25;
-      inside_s.long_z = 35;
       break;
   }
 
@@ -204,9 +205,11 @@ void setup(){
     end_communication();
 
     Serial.print("Longitud de paso: ");             //debugging
-    Serial.println(resultados.long_p);
+    Serial.println(resultados.long_p1);
     Serial.print("Longitud de zancada: ");
     Serial.println(resultados.long_z);
+    Serial.print("Longitud de zancada: ");
+    Serial.println(resultados.long_p2);
     
     
   });
@@ -230,8 +233,10 @@ void loop(){
       resultados = read_string(message, mode);
       prepare_results = false;
       message_e = "";
-      message_e += resultados.long_p;
+      message_e += resultados.long_p1;
       message_e += ",";
       message_e += resultados.long_z;
+      message_e += ",";
+      message_e += resultados.long_p2;
   }
 }

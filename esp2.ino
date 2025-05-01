@@ -123,9 +123,9 @@ struct analisis read_string(String vector, int config){
         }
         suma2_2 += 2;
       }
-      inside_s.long_p1 = suma2_1;      
+      inside_s.long_p2 = suma2_1;      
       inside_s.long_p1 = suma1 + offset_huella;
-      inside_s.long_z = suma2_2 + offset_huella;
+      inside_s.long_z = suma2_2 - 2 + offset_huella;
       break;
   }
 
@@ -204,11 +204,11 @@ void setup(){
 
     end_communication();
 
-    Serial.print("Longitud de paso: ");             //debugging
+    Serial.print("Longitud de paso1: ");             //debugging
     Serial.println(resultados.long_p1);
     Serial.print("Longitud de zancada: ");
     Serial.println(resultados.long_z);
-    Serial.print("Longitud de zancada: ");
+    Serial.print("Longitud de paso2: ");
     Serial.println(resultados.long_p2);
     
     

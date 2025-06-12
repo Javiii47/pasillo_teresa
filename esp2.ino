@@ -8,14 +8,18 @@
 
 #define TXD1 19
 #define RXD1 21
-#define offset_huella 0       //hay que calcular fisicamente el offset entre el talon de la huella y la primera linea de medida
+#define offset_huella 36       //hay que calcular fisicamente el offset entre el talon de la huella y la primera linea de medida
 
 HardwareSerial Arduino_Serial(1);
 
 
 // Pines de LEDS
-const int PIN = 13;          // Pin donde está conectada la tira de leds
-const int NUMPIXELS = 5;    // Número de leds conectados
+const int PIN = 25;          // Pin donde está conectada la tira de leds
+const int NUMPIXELS = 55;    // Número de leds conectados 54
+
+const int PIN2 = 26;          // Segundo pin donde va la otra tira LED
+const int NUMPIXELS2 = 55;     // Número de LEDs en esa segunda tira
+
 
 boolean listening;
 boolean prepare_results = false;
@@ -31,7 +35,8 @@ struct analisis resultados;
 
 String message, message_e;
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_BRG + NEO_KHZ800);
+Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(NUMPIXELS2, PIN2, NEO_BRG + NEO_KHZ800);
 
 // Datos de red
 const char* ssid     = "Pasillo";      
@@ -147,9 +152,15 @@ void setup(){
 
   initLittleFS();
 
-  // Inicializar LEDs
+  // Inicializar LED1
   pixels.begin();
+  pixels.setBrightness(10);
   pixels.show(); // Todos apagados al principio
+
+  // Inicializar LED1
+  pixels2.begin();
+  pixels2.setBrightness(10);
+  pixels2.show(); // Apagado al inicio
 
   // Rutas del servidor
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
@@ -162,15 +173,23 @@ void setup(){
     request->send_P(200, "text/plain", "Hola");
     Serial.println("Fase 1 recibida");
 
-    for (int i = 0; i < 2; i++) { 
-      pixels.setPixelColor(i, 255, 0, 0); // Rojo en los dos primeros
+    for (int i = 0; i < 3; i++) { 
+      pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0); // 
     }
 
-    for (int i = 2; i < 5; i++) { 
-      pixels.setPixelColor(i, 0, 255, 0); // Verde en los siguientes
+    for (int i = 3; i < 17; i++) { 
+      pixels.setPixelColor(i,0, 0, 255); // Verde 
+      pixels2.setPixelColor(i,0, 0, 255);
+    }
+    
+    for (int i = 17; i < 55; i++) { 
+      pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0);
     }
 
     pixels.show(); // Enviar cambios al hardware
+    pixels2.show(); // Enviar cambios al hardware
 
     mode = 1;
     start_communication(); 
@@ -180,6 +199,34 @@ void setup(){
     request->send_P(200, "text/plain", "Hola");
     Serial.println("Fase 2 recibida");
 
+    for (int i = 0; i < 3; i++) { 
+      pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0); // 
+    }
+
+    for (int i = 3; i < 17; i++) { 
+      pixels.setPixelColor(i,0, 0, 255); // Verde 
+      pixels2.setPixelColor(i,0, 0, 255);
+    }
+    
+    for (int i = 17; i < 23; i++) { 
+      pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0); // 
+    }
+
+    for (int i = 23; i < 37; i++) { 
+      pixels.setPixelColor(i, 0, 0, 255); // Verde 
+      pixels2.setPixelColor(i, 0, 0, 255);
+    }
+
+    for (int i = 37; i < 55; i++) { 
+       pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0); // 
+    }
+
+    pixels.show(); // Enviar cambios al hardware
+    pixels2.show(); // Enviar cambios al hardware
+
     mode = 2;
     start_communication();
   });
@@ -187,7 +234,34 @@ void setup(){
   server.on("/fase3", HTTP_GET, [](AsyncWebServerRequest *request){       
     request->send_P(200, "text/plain", "Hola");
     Serial.println("Fase 3 recibida");
+    
+    for (int i = 0; i < 12; i++) { 
+      pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0); // 
+    }
 
+    for (int i = 12; i < 26; i++) { 
+      pixels.setPixelColor(i,0, 0, 255); // Verde 
+      pixels2.setPixelColor(i,0, 0, 255);
+    }
+    
+    for (int i = 26; i < 38; i++) { 
+      pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0); // 
+    }
+
+    for (int i = 38; i < 52; i++) { 
+      pixels.setPixelColor(i, 0, 0, 255); // Verde 
+      pixels2.setPixelColor(i, 0, 0, 255);
+    }
+
+    for (int i = 52; i < 55; i++) { 
+       pixels.setPixelColor(i, 255, 0, 0); // ROJO
+      pixels2.setPixelColor(i, 255, 0, 0); // 
+    }
+
+    pixels.show(); // Enviar cambios al hardware
+    pixels2.show(); // Enviar cambios al hardware
     mode = 3;
     start_communication();
   });
@@ -199,8 +273,10 @@ void setup(){
     // Apagar todos los LEDs
     for (int i = 0; i < NUMPIXELS; i++) {
       pixels.setPixelColor(i, 0, 0, 0); // Apagar cada LED
+      pixels2.setPixelColor(i, 0, 0, 0); // Apagar cada LED
     }
     pixels.show(); // Enviar cambios
+    pixels2.show(); // Enviar cambio
 
     end_communication();
 
